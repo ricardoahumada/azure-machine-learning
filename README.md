@@ -1,4 +1,4 @@
-# Azure Machine Llearning
+# Azure Machine Learning
 
 ## 1. Introducción a Azure Machine Learning y Pipelines de Datos
 ## 2. Ciclo de Vida de Creación y Entrenamiento de Modelos
