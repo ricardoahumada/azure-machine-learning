@@ -4,15 +4,13 @@ import pandas as pd
 import numpy as np
 from pathlib import Path
 
+
 def main(args):
     # read data
-    print('reading from:', args.input_data)
     df = get_data(args.input_data)
 
-    print('moving to:', args.output_datastore)
-
-
     output_df = df.to_csv((Path(args.output_datastore) / "diabetes.csv"), index = False)
+
 
 # function that reads the data
 def get_data(path):
@@ -36,6 +34,9 @@ def parse_args():
 
     # parse args
     args = parser.parse_args()
+
+    print('reading from:', args.input_data)
+    print('moving to:', args.output_datastore)
 
     # return args
     return args
