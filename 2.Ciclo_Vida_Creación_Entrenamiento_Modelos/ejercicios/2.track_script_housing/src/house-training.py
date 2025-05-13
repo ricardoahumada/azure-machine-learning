@@ -16,6 +16,8 @@ from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 
+import mlflow
+
 # 1. Cargar los datos
 # Suponemos que el dataset está en un archivo CSV llamado 'house_prices.csv'
 data = pd.read_csv("./house_prices.csv")
@@ -49,9 +51,10 @@ preprocessor = ColumnTransformer(
 )
 
 # 7. Crear un pipeline con el preprocesador y el modelo Lasso
+alpha = 1  # Parámetro de regularización
 lasso_model = Pipeline(steps=[
     ('preprocessor', preprocessor),
-    ('regressor', Lasso(alpha=1, random_state=42))  # alpha es el parámetro de regularización
+    ('regressor', Lasso(alpha=alpha, random_state=42))  # alpha es el parámetro de regularización
 ])
 
 # 8. Entrenar el modelo
@@ -71,3 +74,8 @@ print(f"Varianza de los datos objetivo: {variance:.2f}")
 # 12. Comparación entre MSE y varianza
 mse_to_variance_ratio = mse / variance
 print(f"Relación MSE/Varianza: {mse_to_variance_ratio:.2f}")
+
+with mlflow.start_run():
+        mlflow.log_metric("mse", mse)
+        mlflow.log_param("alpha", alpha)
+        mlflow.sklearn.log_model(lasso_model,"model")
