@@ -1,10 +1,11 @@
 name: basic-env-cpu
 channels:
-    - conda-forge
+  - conda-forge
 dependencies:
-    - python=3.11
-    - scikit-learn
-    - pandas
-    - numpy
-    - matplotlib
-    - mltable
+  - python=3.11
+  - scikit-learn
+  - pandas
+  - numpy
+  - matplotlib
+  pip:
+    - mltabe
