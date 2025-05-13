@@ -1,4 +1,3 @@
-
 # import libraries
 import pandas as pd
 import numpy as np
@@ -9,15 +8,7 @@ from sklearn.metrics import roc_curve
 
 # load the diabetes dataset
 print("Loading Data...")
-# diabetes = pd.read_csv('diabetes.csv')
-
-# leer mtable
-import mltable
-
-data_asset = ml_client.data.get("diabetes-data-mltable-ric", version="1")
-tbl = mltable.load(data_asset.path)
-diabetes = tbl.to_pandas_dataframe()
-
+diabetes = pd.read_csv('diabetes.csv')
 
 # separate features and labels
 X, y = diabetes[['Pregnancies','PlasmaGlucose','DiastolicBloodPressure','TricepsThickness','SerumInsulin','BMI','DiabetesPedigree','Age']].values, diabetes['Diabetic'].values
