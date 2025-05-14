@@ -19,6 +19,8 @@ from sklearn.pipeline import Pipeline
 import argparse
 from pathlib import Path
 
+import mlflow
+
 def main(args):
 
     # 1. Cargar los datos
@@ -56,7 +58,7 @@ def main(args):
     # 7. Crear un pipeline con el preprocesador y el modelo Lasso
     lasso_model = Pipeline(steps=[
         ('preprocessor', preprocessor),
-        ('regressor', Lasso(alpha=1, random_state=42))  # alpha es el parámetro de regularización
+        ('regressor', Lasso(alpha=args.alpha, random_state=42))  # alpha es el parámetro de regularización
     ])
 
     # 8. Entrenar el modelo
@@ -77,14 +79,20 @@ def main(args):
     mse_to_variance_ratio = mse / variance
     print(f"Relación MSE/Varianza: {mse_to_variance_ratio:.2f}")
 
+    with mlflow.start_run():
+        mlflow.log_metric("mse", mse)
+        mlflow.log_param("alpha", args.alpha)
+        mlflow.sklearn.log_model(lasso_model,"model")
+
+
 
 def parse_args():
     # setup arg parser
     parser = argparse.ArgumentParser()
 
     # add arguments
-    parser.add_argument("--input_data", dest='input_data',
-                        type=str)
+    parser.add_argument("--input_data", dest='input_data', type=str)
+    parser.add_argument("--alpha", dest='alpha', type=float, default=0.01)
     
     # parse args
     args = parser.parse_args()
