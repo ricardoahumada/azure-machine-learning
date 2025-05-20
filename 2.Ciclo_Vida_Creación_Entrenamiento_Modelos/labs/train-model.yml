@@ -1,0 +1,21 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
+name: train_model_ric
+display_name: Train a logistic regression model RIC
+version: 1
+type: command
+inputs:
+  training_data: 
+    type: uri_folder
+  reg_rate:
+    type: number
+    default: 0.01
+outputs:
+  model_output:
+    type: mlflow_model
+code: /home/azureuser/cloudfiles/code/Users/formacion/azure-machine-learning/2.Ciclo_Vida_Creación_Entrenamiento_Modelos/labs/src/train-model
+environment: azureml:AzureML-sklearn-0.24-ubuntu18.04-py37-cpu@latest
+command: >-
+  python train-model.py 
+  --training_data ${{inputs.training_data}} 
+  --reg_rate ${{inputs.reg_rate}} 
+  --model_output ${{outputs.model_output}} 
