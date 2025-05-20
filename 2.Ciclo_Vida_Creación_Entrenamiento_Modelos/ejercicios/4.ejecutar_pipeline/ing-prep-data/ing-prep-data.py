@@ -50,6 +50,7 @@ def preprocess_data(data):
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--input_data", dest='input_data', type=str)
+    parser.add_argument("--output_data", dest='output_data',type=str)
     args = parser.parse_args()
 
     return args
