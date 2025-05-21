@@ -1,33 +1,12 @@
 
-# import libraries
 import pandas as pd
-import numpy as np
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression, Lasso
-from sklearn.metrics import roc_auc_score
-from sklearn.metrics import roc_curve
-
-import pandas as pd
-import numpy as np
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import Lasso
-from sklearn.metrics import mean_squared_error
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
-from sklearn.compose import ColumnTransformer
-from sklearn.pipeline import Pipeline
-
 import argparse
 from pathlib import Path
-
-import mlflow
-
 
 def main(args):
     df = read_data(args.input_data)
     df2 = preprocess_data(df)
-    
     output_df = df2.to_csv((Path(args.output_data) / "housing_prep.csv"), index = False)
-
 
 
 def read_data(uri):
@@ -37,6 +16,7 @@ def read_data(uri):
     print(data.columns)
 
     return data
+
 
 def preprocess_data(data):
     # 3. Descartar columnas no significativas

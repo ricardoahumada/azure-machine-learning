@@ -1,6 +1,6 @@
 $schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
-name: ing_prep_data_ric
-display_name: Ingerir y preprocesar datos housing Ric
+name: ing_prep_data_housing_ric
+display_name: Ingesta y Preprocesamiento de Datos Housing
 version: 1
 type: command
 inputs:
@@ -9,9 +9,9 @@ inputs:
 outputs:
   output_data:
     type: uri_folder
-code: /home/azureuser/cloudfiles/code/Users/formacion/azure-machine-learning/2.Ciclo_Vida_Creación_Entrenamiento_Modelos/ejercicios/4.ejecutar_pipeline/ing-prep-data
+code: ./src/ing-prep-data
 environment: azureml:AzureML-sklearn-0.24-ubuntu18.04-py37-cpu@latest
 command: >-
-  python ing-prep-data.py 
+  python ing-prep-data.py
   --input_data ${{inputs.input_data}}
   --output_data ${{outputs.output_data}}

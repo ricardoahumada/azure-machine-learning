@@ -1,0 +1,16 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
+name: eval_model_housing_ric
+display_name: Evaluación de Modelo Lasso
+version: 8
+type: command
+inputs:
+  input_data: 
+    type: uri_folder
+  model_input:
+    type: mlflow_model
+code: ./src/eval-model/
+environment: azureml:AzureML-sklearn-0.24-ubuntu18.04-py37-cpu@latest
+command: >-
+  python eval-model.py
+  --input_data ${{inputs.input_data}}
+  --model_input ${{inputs.model_input}}
