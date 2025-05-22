@@ -8,11 +8,11 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import roc_auc_score
 from sklearn.metrics import roc_curve
 import matplotlib.pyplot as plt
+import mlflow.sklearn
+from mlflow.models.signature import ModelSignature
+from mlflow.types.schema import Schema, ColSpec
 
 def main(args):
-    # enable autologging
-    mlflow.autolog()
-
     # read data
     df = get_data(args.training_data)
 
@@ -22,7 +22,29 @@ def main(args):
     # train model
     model = train_model(args.reg_rate, X_train, X_test, y_train, y_test)
 
-    eval_model(model, X_test, y_test)
+    # evaluate model
+    y_hat = eval_model(model, X_test, y_test)
+
+    # create the signature manually
+    input_schema = Schema([
+    ColSpec("integer", "Pregnancies"),
+    ColSpec("integer", "PlasmaGlucose"),
+    ColSpec("integer", "DiastolicBloodPressure"),
+    ColSpec("integer", "TricepsThickness"),
+    ColSpec("integer", "DiastolicBloodPressure"),
+    ColSpec("integer", "SerumInsulin"),
+    ColSpec("double", "BMI"),
+    ColSpec("double", "DiabetesPedigree"),
+    ColSpec("integer", "Age"),
+    ])
+
+    output_schema = Schema([ColSpec("boolean")])
+
+    # Create the signature object
+    signature = ModelSignature(inputs=input_schema, outputs=output_schema)
+
+    # manually log the model
+    mlflow.sklearn.log_model(model, "model", signature=signature)
 
 # function that reads the data
 def get_data(path):
@@ -48,14 +70,14 @@ def train_model(reg_rate, X_train, X_test, y_train, y_test):
 
     return model
 
-
 # function that evaluates the model
 def eval_model(model, X_test, y_test):
     # calculate accuracy
     y_hat = model.predict(X_test)
     acc = np.average(y_hat == y_test)
     print('Accuracy:', acc)
-
+ 
+    return y_hat
 
 def parse_args():
     # setup arg parser
