@@ -78,6 +78,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--input_data", dest='input_data', type=str)
     parser.add_argument("--alpha", dest='alpha', type=float, default=0.01)
+    
     parser.add_argument("--model_output", dest='model_output',type=str)
     parser.add_argument("--output_data", dest='output_data',type=str)
     args = parser.parse_args()

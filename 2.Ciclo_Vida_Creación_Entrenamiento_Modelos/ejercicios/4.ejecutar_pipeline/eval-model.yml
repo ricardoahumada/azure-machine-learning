@@ -1,7 +1,7 @@
 $schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
 name: eval_model_housing_ric
 display_name: Evaluación de Modelo Lasso
-version: 8
+version: 10
 type: command
 inputs:
   input_data: 

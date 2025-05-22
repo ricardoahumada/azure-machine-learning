@@ -1,7 +1,7 @@
 $schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
 name: ing_prep_data_housing_ric
 display_name: Ingesta y Preprocesamiento de Datos Housing
-version: 1
+version: 2
 type: command
 inputs:
   input_data: 
