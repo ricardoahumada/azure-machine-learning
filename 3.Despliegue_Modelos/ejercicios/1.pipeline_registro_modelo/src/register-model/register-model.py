@@ -35,17 +35,23 @@ def register_model(model_path, metrics, model_name):
     ml_client = MLClient.from_config(credential=DefaultAzureCredential())
 
     mse = metrics['mse']
+    mse_to_variance_ratio = metrics['mse_to_variance_ratio']
+    threshold = 0.98
 
     # Registrar el modelo
-    registered_model = ml_client.models.create_or_update(
-        Model(
-            path=model_path,
-            name=model_name,
-            description=f"Modelo registrado con accuracy={mse}"
+    if mse_to_variance_ratio < threshold:
+        registered_model = ml_client.models.create_or_update(
+            Model(
+                path=model_path,
+                name=model_name,
+                description=f"Modelo registrado con accuracy={mse}"
+            )
         )
-    )
+        print(f"Modelo {model_name} registrado con éxito.") 
 
-    print(f"Modelo {model_name} registrado con éxito.") 
+    else:
+        print(f"mse_to_variance_ratio ({mse_to_variance_ratio}) no supera el umbral ({threshold}). El modelo no será registrado ni desplegado.")
+
 
 
 
