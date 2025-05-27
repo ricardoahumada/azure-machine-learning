@@ -36,7 +36,7 @@ def register_model(model_path, metrics, model_name):
 
     mse = metrics['mse']
     mse_to_variance_ratio = metrics['mse_to_variance_ratio']
-    threshold = 0.98
+    threshold = 0.50
 
     # Registrar el modelo
     if mse_to_variance_ratio < threshold:
@@ -51,6 +51,7 @@ def register_model(model_path, metrics, model_name):
 
     else:
         print(f"mse_to_variance_ratio ({mse_to_variance_ratio}) no supera el umbral ({threshold}). El modelo no será registrado ni desplegado.")
+        raise ValueError(f"mse_to_variance_ratio ({mse_to_variance_ratio}) no supera el umbral ({threshold}). El modelo no será registrado ni desplegado.")
 
 
 
